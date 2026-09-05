@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Age Calculator - How Old Am I? Exact Age in Years, Months & Days</title>
+  <meta name="description" content="Use this free age calculator to find out exactly how old you are in years, months, days, hours, minutes and seconds. Calculate your age from your date of birth and see your next birthday countdown." />
+  <meta name="keywords" content="age calculator, calculate age, how old am I, how old are you, exact age calculator, date of birth calculator, birthday calculator, age in years months days, age limit, chronological age calculator, age difference calculator, next birthday countdown, past year calculator, age calculator online, free age calculator" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Age Calculator - How Old Am I?" />
+  <meta property="og:description" content="Find your exact age in years, months, days, hours, minutes and seconds with this free online age calculator." />
+  <meta property="og:site_name" content="MDK Chrono Age Calculator" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MDK Chrono Age Calculator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "description": "A free online age calculator that calculates exact age from a date of birth and shows the next birthday countdown.",
+      "featureList": [
+        "Calculate exact age in years, months and days",
+        "Calculate total days and hours lived",
+        "Show next birthday countdown",
+        "Show zodiac and age milestones"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+  <link rel="icon" type="image/png" href="./logo.png?v=4" />
+  <link rel="shortcut icon" type="image/png" href="./logo.png?v=4" />
+  <link rel="apple-touch-icon" href="./logo.png?v=4" />
+  <script type="module" crossorigin src="./assets/index-BihjN_8P.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B3D3pqip.css">
+</head>
+<body>
+  <!-- WebGL Background Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Real-time Scroll Progress Bar -->
+  <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+
+  <!-- Persistent Header Navigation -->
+  <header class="app-header">
+    <a href="#" class="brand-badge" id="btn-brand-home" aria-label="MDK Chrono Home">
+      <img src="./logo.png" alt="MDK Chrono Logo" class="brand-header-logo" />
+      <div class="brand-text">
+        <span class="brand-subtext">TEMPORAL 3D ENGINE</span>
+      </div>
+    </a>
+
+    <!-- Scroll Chapters Indicator Pills -->
+    <nav class="chapter-pills" id="chapter-nav" aria-label="Timeline navigation">
+      <div class="chapter-nav-logo" title="Mr Sabir Since 2026">
+        <img src="./logo.png" alt="MDK Chrono Logo" />
+      </div>
+      <button class="chapter-pill active" data-index="0">01 HERO</button>
+      <button class="chapter-pill" data-index="1">02 INPUT</button>
+      <button class="chapter-pill" data-index="2">03 AGE MATRIX</button>
+      <button class="chapter-pill" data-index="3">04 COUNTDOWN</button>
+      <button class="chapter-pill" data-index="4">05 UNITS</button>
+      <button class="chapter-pill" data-index="5">06 FINALE</button>
+    </nav>
+
+    <!-- Social Media Platform Links -->
+    <div class="header-actions" aria-label="Social links">
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link-btn" title="GitHub" aria-label="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="social-link-btn" title="X (Twitter)" aria-label="X">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link-btn" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link-btn" title="LinkedIn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-link-btn" title="YouTube" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- UI Stage Overlay (Fixed Viewport) -->
+  <main class="ui-stage" id="ui-stage">
+
+    <!-- Section 1: Hero -->
+    <section class="story-section active" id="sec-hero" data-sec-index="0">
+      <div class="hero-content interactive-zone">
+        <div class="hero-pill">
+          <span>◆</span> CONTINUOUS 3D SPACE CONTINUUM
+        </div>
+        <h2 class="hero-title">TRAVERSE YOUR LIFESPAN IN 3D</h2>
+        <p class="hero-subtitle">
+          Experience the physical dimension of time. Every scroll step maneuvers the camera through your chronological coordinates, floating calendar relics, and mechanical clockworks.
+        </p>
+        <div class="hero-scroll-prompt" id="hero-scroll-prompt">
+          <div class="scroll-mouse-icon">
+            <div class="scroll-wheel-dot"></div>
+          </div>
+          <span>SCROLL DOWN TO ENGAGE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Input Chamber -->
+    <section class="story-section" id="sec-calc" data-sec-index="1">
+      <div class="glass-card calc-container interactive-zone" data-tilt>
+        <div class="calc-header">
+          <h2>CHRONO INPUT CHAMBER</h2>
+          <p>Specify your exact birth parameters to calibrate the temporal matrix</p>
+        </div>
+
+        <form id="age-form" onsubmit="return false;">
+          <div class="form-group">
+            <label class="form-label" for="birthdate-input">Birth Date (Required)</label>
+            <input type="date" id="birthdate-input" class="chrono-input" required />
+          </div>
+
+          <div class="form-group">
+            <div class="input-row">
+              <div>
+                <label class="form-label" for="birthtime-input">Birth Time (Optional)</label>
+                <input type="time" id="birthtime-input" class="chrono-input" value="12:00" />
+              </div>
+              <div>
+                <label class="form-label">Precision Engine</label>
+                <input type="text" class="chrono-input" value="Atomic Millisecond" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="presets-label">Popular Milestones & Historical Presets</div>
+          <div class="presets-container" id="presets-bar">
+            <button type="button" class="preset-chip" data-years="18">Age 18</button>
+            <button type="button" class="preset-chip" data-years="21">Age 21</button>
+            <button type="button" class="preset-chip" data-years="30">Age 30</button>
+            <button type="button" class="preset-chip" data-date="2000-01-01" data-time="00:00">Millennium</button>
+            <button type="button" class="preset-chip" data-date="1879-03-14" data-time="11:30">A. Einstein</button>
+            <button type="button" class="preset-chip" data-date="1969-07-20" data-time="20:17">Apollo 11</button>
+          </div>
+
+          <button type="submit" id="btn-submit-calc" class="btn-calculate">
+            <span>CALIBRATE & ENGAGE</span>
+            <span>⚡</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Section 3: Live Age Matrix -->
+    <section class="story-section" id="sec-result" data-sec-index="2">
+      <div class="result-container interactive-zone">
+        <div class="mascot-speech-bubble" id="mascot-speech">
+          <div class="mascot-status-pulse"></div>
+          <span class="mascot-speech-text" id="mascot-text">
+            Chrono-Bot: "Sensors online! Your life stream is actively progressing."
+          </span>
+        </div>
+
+        <div class="age-matrix-grid">
+          <div class="age-tile" data-tilt>
+            <div class="age-tile-num" id="val-years">00</div>
+            <div class="age-tile-unit">Years</div>
+          </div>
+          <div class="age-tile" data-tilt>
+            <div class="age-tile-num" id="val-months">00</div>
+            <div class="age-tile-unit">Months</div>
+          </div>
+          <div class="age-tile" data-tilt>
+            <div class="age-tile-num" id="val-days">00</div>
+            <div class="age-tile-unit">Days</div>
+          </div>
+          <div class="age-tile" data-tilt>
+            <div class="age-tile-num" id="val-hours">00</div>
+            <div class="age-tile-unit">Hours</div>
+          </div>
+          <div class="age-tile" data-tilt>
+            <div class="age-tile-num" id="val-minutes">00</div>
+            <div class="age-tile-unit">Minutes</div>
+          </div>
+          <div class="age-tile" data-tilt>
+            <div class="age-tile-num" id="val-seconds">00</div>
+            <div class="age-tile-unit">Seconds</div>
+          </div>
+        </div>
+
+        <!-- Live Millisecond Ticker Card -->
+        <div class="glass-card" style="padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between;" data-tilt>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--neon-cyan); letter-spacing: 0.1em;">
+              LIVE ATOMIC STREAM:
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; color: #fff;">
+              +<span id="val-milliseconds" style="color: var(--neon-cyan);">000</span> MS
+            </div>
+          </div>
+          <button type="button" id="btn-confetti" class="btn-icon-toggle" style="width: auto; padding: 0.5rem 1rem;" title="Celebrate">
+            🎉 Celebrate
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Birthday Countdown & Zodiac -->
+    <section class="story-section" id="sec-countdown" data-sec-index="3">
+      <div class="glass-card countdown-card interactive-zone" data-tilt>
+        <div class="bday-grid">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--neon-gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem;">
+              NEXT CELEBRATION ORBIT
+            </div>
+            <h3 id="bday-turning-heading" style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 0.4rem;">
+              Turning Age In
+            </h3>
+            <p id="bday-exact-date" style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+              Calculating trajectory...
+            </p>
+
+            <div class="bday-clock-cluster">
+              <div class="bday-subtile">
+                <div class="bday-subtile-num" id="bday-days">00</div>
+                <div class="bday-subtile-label">Days</div>
+              </div>
+              <div class="bday-subtile">
+                <div class="bday-subtile-num" id="bday-hours">00</div>
+                <div class="bday-subtile-label">Hours</div>
+              </div>
+              <div class="bday-subtile">
+                <div class="bday-subtile-num" id="bday-minutes">00</div>
+                <div class="bday-subtile-label">Mins</div>
+              </div>
+              <div class="bday-subtile">
+                <div class="bday-subtile-num" id="bday-seconds">00</div>
+                <div class="bday-subtile-label">Secs</div>
+              </div>
+            </div>
+
+            <div class="zodiac-badge-row">
+              <div class="zodiac-chip">
+                <div class="zodiac-icon" id="zodiac-symbol">♈</div>
+                <div class="zodiac-info">
+                  <h4 id="zodiac-name">Western Zodiac</h4>
+                  <p id="zodiac-details">Element: Fire • Stone: Diamond</p>
+                </div>
+              </div>
+              <div class="zodiac-chip">
+                <div class="zodiac-icon" id="chinese-zodiac-symbol">🐉</div>
+                <div class="zodiac-info">
+                  <h4 id="chinese-zodiac-name">Chinese Zodiac</h4>
+                  <p id="chinese-zodiac-details">Year of the Dragon</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--neon-cyan); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem;">
+              Upcoming Birthday Weekdays
+            </div>
+            <div class="upcoming-birthdays-list" id="upcoming-bdays-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Units & Space Metrics -->
+    <section class="story-section" id="sec-units" data-sec-index="4">
+      <div class="units-container interactive-zone">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <h3 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: #fff;">
+            AGE ACROSS DIMENSIONS
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">
+            Temporal expansion and biological milestones accumulated since your arrival
+          </p>
+        </div>
+
+        <div class="units-grid">
+          <div class="unit-card" data-tilt>
+            <div class="unit-header">
+              <div class="unit-icon cyan">📅</div>
+              <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-cyan);">TOTAL</div>
+            </div>
+            <div class="unit-value" id="tot-days">0</div>
+            <div class="unit-label">Total Days Alive</div>
+          </div>
+
+          <div class="unit-card" data-tilt>
+            <div class="unit-header">
+              <div class="unit-icon gold">⏳</div>
+              <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-gold);">TOTAL</div>
+            </div>
+            <div class="unit-value" id="tot-hours">0</div>
+            <div class="unit-label">Total Hours Lived</div>
+          </div>
+
+          <div class="unit-card" data-tilt>
+            <div class="unit-header">
+              <div class="unit-icon pink">❤️</div>
+              <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-pink);">BIOLOGY</div>
+            </div>
+            <div class="unit-value" id="bio-heartbeats">0</div>
+            <div class="unit-label">Estimated Heartbeats</div>
+          </div>
+
+          <div class="unit-card" data-tilt>
+            <div class="unit-header">
+              <div class="unit-icon green">🌬️</div>
+              <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-green);">BIOLOGY</div>
+            </div>
+            <div class="unit-value" id="bio-breaths">0</div>
+            <div class="unit-label">Estimated Breaths Taken</div>
+          </div>
+
+          <div class="unit-card" data-tilt>
+            <div class="unit-header">
+              <div class="unit-icon cyan">🪐</div>
+              <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-cyan);">COSMOS</div>
+            </div>
+            <div class="unit-value" id="cos-sun-dist">0M km</div>
+            <div class="unit-label">Solar Orbit Distance Traveled</div>
+          </div>
+
+          <div class="unit-card" data-tilt>
+            <div class="unit-header">
+              <div class="unit-icon pink">🔴</div>
+              <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--neon-pink);">PLANETARY</div>
+            </div>
+            <div class="unit-value" id="cos-mars-age">0.00</div>
+            <div class="unit-label">Years on Mars</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Grand Finale & Discord-Style Footer -->
+    <section class="story-section" id="sec-finale" data-sec-index="5">
+      <div class="finale-container interactive-zone">
+        
+        <!-- Discord-Style Master Footer -->
+        <footer class="discord-footer">
+          <!-- Top Bar with Mascot & Actions -->
+          <div class="df-top-bar">
+            <div class="df-brand">
+              <div class="df-mascot-pill">
+                <img src="./logo.png?v=4" alt="Mr Sabir Logo" class="df-brand-logo-img" />
+              </div>
+              <span class="df-tagline">TEMPORAL CONTINUUM ENGINE • SINCE 2026</span>
+            </div>
+            <div class="df-top-actions">
+              <button type="button" class="df-btn-primary" id="btn-copy-summary">
+                📋 Copy Dossier
+              </button>
+              <button type="button" class="df-btn-outline" id="btn-return-origin">
+                ▲ Return to Origin
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Navigation Grid: Left Brand/Language/Social + 4 Columns -->
+          <div class="df-main-grid">
+            <!-- Left Info Column: Language + Social -->
+            <div class="df-left-col">
+              <div class="df-lang-group">
+                <label for="footer-lang" class="df-section-label">Language</label>
+                <div class="df-lang-picker">
+                  <span class="df-globe-icon">🌐</span>
+                  <select id="footer-lang" class="df-lang-select" aria-label="Select Language">
+                    <option value="en" selected>English (US)</option>
+                    <option value="hi">हिन्दी (Hindi)</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ja">日本語</option>
+                  </select>
+                  <span class="df-chevron">▼</span>
+                </div>
+              </div>
+
+              <div class="df-social-group">
+                <div class="df-section-label">Social</div>
+                <div class="df-social-icons">
+                  <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="df-social-btn" title="X (Twitter)" aria-label="X">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </a>
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="df-social-btn" title="Instagram" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  </a>
+                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="df-social-btn" title="Facebook" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                  </a>
+                  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="df-social-btn" title="YouTube" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="df-social-btn" title="GitHub" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right 4 Link Columns (Like in Discord Image) -->
+            <div class="df-links-grid">
+              <!-- Column 1: Product -->
+              <div class="df-col">
+                <h4 class="df-col-title">Product</h4>
+                <ul class="df-link-list">
+                  <li><a href="#sec-hero">3D Age Engine</a></li>
+                  <li><a href="#sec-calc">Date of Birth Input</a></li>
+                  <li><a href="#sec-result">Live Age Matrix</a></li>
+                  <li><a href="#sec-countdown">Birthday Countdown</a></li>
+                  <li><a href="#sec-units">Biological Clocks</a></li>
+                  <li><a href="#sec-units">Planetary Time (Mars)</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 2: Company -->
+              <div class="df-col">
+                <h4 class="df-col-title">Company</h4>
+                <ul class="df-link-list">
+                  <li><a href="#">About Project</a></li>
+                  <li><a href="#" class="df-creator-link">Creator: Mr Sabir</a></li>
+                  <li><a href="#">Chrono Philosophy</a></li>
+                  <li><a href="#">Design System</a></li>
+                  <li><a href="#">Release Notes</a></li>
+                  <li><a href="#">Media Kit</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 3: Resources -->
+              <div class="df-col">
+                <h4 class="df-col-title">Resources</h4>
+                <ul class="df-link-list">
+                  <li><a href="#">Support Center</a></li>
+                  <li><a href="#">Leap Year Formula</a></li>
+                  <li><a href="#">Zodiac Calculations</a></li>
+                  <li><a href="#">Astronomy Data</a></li>
+                  <li><a href="#">Developer API</a></li>
+                  <li><a href="#">Send Feedback</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 4: Policies -->
+              <div class="df-col">
+                <h4 class="df-col-title">Policies</h4>
+                <ul class="df-link-list">
+                  <li><a href="#">Terms of Use</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                  <li><a href="#">Cookie Settings</a></li>
+                  <li><a href="#">Open Source License</a></li>
+                  <li><a href="#">Security Guidelines</a></li>
+                  <li><a href="#">Acknowledgements</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="df-divider"></div>
+
+          <!-- Giant Typographic Brand Banner: "MR SABIR" (Matching Discord's Giant Logo) -->
+          <div class="df-giant-wordmark" aria-hidden="true">
+            MR SABIR
+          </div>
+
+          <!-- Bottom Bar: Copyright & Creator Credit -->
+          <div class="df-bottom-bar">
+            <div class="df-bottom-copy">
+              <img src="./logo.png?v=4" alt="Mr Sabir Logo" class="df-mini-logo-img" />
+              <span>© 2026 Mr Sabir Chrono • All rights reserved.</span>
+            </div>
+            <div class="df-bottom-credit">
+              Designed & Built with ❤️ by <span class="df-highlight-name">Mr Sabir</span>
+            </div>
+            <button type="button" class="df-btn-top" id="btn-footer-top" title="Back to Top">
+              ▲ Top
+            </button>
+          </div>
+        </footer>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Scroll Height Orchestrator Track -->
+  <div id="scroll-track"></div>
+
+  <!-- Interactive Feedback Toast -->
+  <div class="toast-notice" id="toast-notice">
+    Temporal Dossier copied to clipboard!
+  </div>
+
+</body>
+</html>
