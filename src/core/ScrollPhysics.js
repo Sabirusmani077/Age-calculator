@@ -17,6 +17,10 @@ export class ScrollPhysics {
 
     // Wheel & Touch physics
     this.touchStartY = 0;
+    this.touchLastY = 0;
+    this.touchLastTime = 0;
+    this.touchVelocityY = 0;
+    this.touchSamples = [];
     this.isTouch = false;
     this.isWheelActive = false;
     this.wheelTimeout = null;
@@ -83,24 +87,86 @@ export class ScrollPhysics {
       e.preventDefault();
     }, { passive: false });
 
-    // 2. Touch Physics for Mobile Devices
+    // 2. High-Performance Kinetic Touch Physics for Mobile Devices
     window.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) return;
       this.isTouch = true;
-      this.touchStartY = e.touches[0].clientY;
+      const y = e.touches[0].clientY;
+      this.touchStartY = y;
+      this.touchLastY = y;
+      this.touchLastTime = performance.now();
+      this.touchVelocityY = 0;
+      this.touchSamples = [];
     }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
-      if (!this.isTouch) return;
+      if (!this.isTouch || e.touches.length > 1) return;
       const touchY = e.touches[0].clientY;
-      const deltaY = (this.touchStartY - touchY) * 1.6;
-      this.touchStartY = touchY;
+      const now = performance.now();
+      const deltaY = this.touchLastY - touchY;
+      const dt = Math.max(1, now - this.touchLastTime);
 
-      const maxScroll = this.getMaxScroll();
-      this.targetProgress = Math.max(0, Math.min(1, this.targetProgress + (deltaY / maxScroll)));
-      e.preventDefault();
+      this.touchVelocityY = deltaY / dt; // px per ms
+
+      // Keep recent velocity samples for accurate flick / kinetic fling
+      this.touchSamples.push({ v: this.touchVelocityY, time: now });
+      if (this.touchSamples.length > 5) this.touchSamples.shift();
+
+      this.touchLastY = touchY;
+      this.touchLastTime = now;
+
+      // Section 6 Finale: Discord footer internal scroll support on touch
+      if (this.targetProgress >= 0.98) {
+        const finale = document.getElementById('sec-finale');
+        if (finale && finale.scrollHeight > finale.clientHeight + 10) {
+          if (deltaY > 0 && finale.scrollTop + finale.clientHeight < finale.scrollHeight - 5) {
+            finale.scrollTop += deltaY;
+            return;
+          } else if (deltaY < 0 && finale.scrollTop > 5) {
+            finale.scrollTop += deltaY;
+            return;
+          }
+        }
+      }
+
+      // Mobile Touch Gesture Calibration:
+      // A natural swipe (~180-220px) seamlessly advances roughly one full chapter!
+      // gestureScale based on screen height ensures natural responsiveness across all phones & tablets
+      const gestureScale = Math.max(320, window.innerHeight * 1.15);
+      const scrollStep = (deltaY * 1.15) / gestureScale;
+
+      this.targetProgress = Math.max(0, Math.min(1, this.targetProgress + scrollStep));
+
+      if (e.cancelable) {
+        e.preventDefault();
+      }
     }, { passive: false });
 
     window.addEventListener('touchend', () => {
+      if (!this.isTouch) return;
+      this.isTouch = false;
+
+      const now = performance.now();
+      // Average recent samples from the last 120ms
+      const recent = (this.touchSamples || []).filter(s => now - s.time < 120);
+      let avgV = 0;
+      if (recent.length > 0) {
+        avgV = recent.reduce((sum, s) => sum + s.v, 0) / recent.length;
+      } else {
+        avgV = this.touchVelocityY || 0;
+      }
+
+      // Kinetic Momentum Fling: when user flicks with speed, glide forward smoothly
+      if (Math.abs(avgV) > 0.18) {
+        const gestureScale = Math.max(320, window.innerHeight * 1.15);
+        // Calculate fling impulse (clamped to at most 1.5 chapters per single flick)
+        const flingDistance = avgV * Math.min(380, Math.abs(avgV) * 220);
+        const flingProgress = flingDistance / gestureScale;
+        this.targetProgress = Math.max(0, Math.min(1, this.targetProgress + flingProgress));
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchcancel', () => {
       this.isTouch = false;
     }, { passive: true });
 
@@ -171,7 +237,9 @@ export class ScrollPhysics {
     } else {
       // Damped spring / lerp equation with delta-time compensation
       const diff = this.targetProgress - this.currentProgress;
-      const frameDamping = 1 - Math.pow(1 - this.damping, deltaMs / 16.66);
+      // Snappy 1:1 finger tracking while dragging on touch screen (0.22), luxury momentum when coasting
+      const activeDamping = this.isTouch ? 0.22 : this.damping;
+      const frameDamping = 1 - Math.pow(1 - activeDamping, deltaMs / 16.66);
       this.currentProgress += diff * frameDamping;
 
       // Calculate instantaneous velocity

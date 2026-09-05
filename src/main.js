@@ -248,7 +248,11 @@ class App {
 
     // Mark tab pill active
     this.chapterPills.forEach((pill, i) => {
-      pill.classList.toggle('active', i === idx);
+      const isActive = i === idx;
+      pill.classList.toggle('active', isActive);
+      if (isActive) {
+        pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
     });
   }
 
@@ -495,14 +499,19 @@ Calculated with MDK 3D Age Engine`;
     });
 
     // Sound tick on chapter change
-    if (closestIdx !== this.lastScrollSection) {
+    const hasSectionChanged = closestIdx !== this.lastScrollSection;
+    if (hasSectionChanged) {
       this.lastScrollSection = closestIdx;
       this.audio.playTick();
     }
 
     // Update chapter pills
     this.chapterPills.forEach((pill, idx) => {
-      pill.classList.toggle('active', idx === closestIdx);
+      const isActive = idx === closestIdx;
+      pill.classList.toggle('active', isActive);
+      if (isActive && hasSectionChanged) {
+        pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
     });
 
     // Update progress bar width
